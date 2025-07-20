@@ -17,12 +17,15 @@ This is an [Express](https://expressjs.com) application with PostgreSQL database
    npm install
    ```
 
-2. Set up a local PostgreSQL database and set the DATABASE_URL environment variable:
-   ```bash
-   export DATABASE_URL="postgresql://username:password@localhost:5432/express_hello_world"
+2. Create a `.env` file in the project root with your local database credentials:
+   ```
+   DATABASE_URL=postgresql://myuser:mypassword@localhost:5432/express_hello_world
+   NODE_ENV=development
    ```
 
-3. Run the application:
+3. Set up a local PostgreSQL database (see Database Setup section below)
+
+4. Run the application:
    ```bash
    npm start
    ```
@@ -30,6 +33,25 @@ This is an [Express](https://expressjs.com) application with PostgreSQL database
    Or for development with auto-restart:
    ```bash
    npm run dev
+   ```
+
+## Database Setup (Local Development)
+
+1. Connect to PostgreSQL as superuser:
+   ```bash
+   sudo -u postgres psql
+   ```
+
+2. Create database and user:
+   ```sql
+   CREATE DATABASE express_hello_world;
+   CREATE USER myuser WITH PASSWORD 'mypassword';
+   GRANT ALL PRIVILEGES ON DATABASE express_hello_world TO myuser;
+   \c express_hello_world
+   GRANT USAGE, CREATE ON SCHEMA public TO myuser;
+   GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public TO myuser;
+   GRANT ALL PRIVILEGES ON ALL SEQUENCES IN SCHEMA public TO myuser;
+   \q
    ```
 
 ## Deployment on Render
